@@ -1,0 +1,8 @@
+[core]
+    remote = mys3remote
+['remote "mys3remote"']
+    url = s3://udas3bucket/
+    region = us-east-2
+    read_timeout = 300
+    connect_timeout = 300
+    endpointurl = https://udas3bucket.s3.amazonaws.com/
