@@ -1,6 +1,7 @@
 import pandas as pd
 import joblib
 import logging
+import numpy as np
 from ml import model_func, train_model, preprocess_data
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
@@ -33,14 +34,11 @@ def slice_model_salary(data, model, encoder, lb):
     """
     for cls in data["salary"].unique():
         df_temp = data[data["salary"] == cls]
-        y = df_temp.pop('salary')
         logger.info("df temp shape\n {}".format(df_temp.shape))
-        logger.info("y\n {}".format(y))
         X, y, _, _ = preprocess_data.process_data(df_temp, train_model.get_cat_features(),
-                                                    None, False, encoder, lb)
+                                                    'salary', False, encoder, lb)
+        logger.info("X\n {}".format(X.shape))
         predictions = model_func.inference(model, X)
-        logger.info("predictions {}".format(predictions))
-        logger.info("predictions shape {}".format(predictions.shape))
         precision, recall, fbeta = model_func.compute_model_metrics(y, predictions)
         logger.info(f"Class: {cls}")
         logger.info(f"precision {precision}")

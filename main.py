@@ -6,14 +6,15 @@ import pandas as pd
 from test import slice_check
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
-from typing import Union
-from ml import model_func, preprocess_data, train_model
 import joblib
+import logging
+from ml import model_func, preprocess_data, train_model
+from typing import List
 
-
+logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
+logger = logging.getLogger()
 
 app = FastAPI()
-
 
 
 @app.get("/")
@@ -37,37 +38,62 @@ class ApiInfer(BaseModel):
     hours_per_week: float = Field(alias='hours-per-week')
     native_country: str = Field(alias='native-country')
 
-    def createDataPayload(self):
-        '''
-        raw_data = pd.DataFrame([[ApiInfer.age, ApiInfer.workclass, ApiInfer.fnlgt, ApiInfer.education,
-                                  ApiInfer.education_num, ApiInfer.marital_status, ApiInfer.occupation,
-                                  ApiInfer.relationship, ApiInfer.race, ApiInfer.sex, ApiInfer.capital_gain,
-                                  ApiInfer.capital_loss, ApiInfer.hours_per_week, ApiInfer.native_country]])
-        '''
-        raw_data = pd.DataFrame([[self.age, self.workclass, self.fnlgt, self.education,
-                                  self.education_num, self.marital_status, self.occupation,
-                                  self.relationship, self.race, self.sex, self.capital_gain,
-                                  self.capital_loss, self.hours_per_week, self.native_country]])
+
+def create_data_payload(ApiInfer: ApiInfer):
+    columns = ['age',
+               'workclass',
+               'fnlgt',
+               'education',
+               'education-num',
+               'marital-status',
+               'occupation',
+               'relationship',
+               'race',
+               'sex',
+               'capital-gain',
+               'capital-loss',
+               'hours-per-week',
+               'native-country'
+               ]
+
+    raw_data = pd.DataFrame([[ApiInfer.age, ApiInfer.workclass, ApiInfer.fnlgt, ApiInfer.education,
+                              ApiInfer.education_num, ApiInfer.marital_status, ApiInfer.occupation,
+                              ApiInfer.relationship, ApiInfer.race, ApiInfer.sex, ApiInfer.capital_gain,
+                              ApiInfer.capital_loss, ApiInfer.hours_per_week, ApiInfer.native_country]]
+                            , columns=columns)
+    '''
+    raw_data = pd.DataFrame([[self.age, self.workclass, self.fnlgt, self.education,
+                              self.education_num, self.marital_status, self.occupation,
+                              self.relationship, self.race, self.sex, self.capital_gain,
+                              self.capital_loss, self.hours_per_week, self.native_country]])
+    '''
+    return raw_data
 
 
-        return raw_data
 
-@app.get("/infer/", response_model=ApiInfer)
-async def infer():
-    #load the model
+@app.post("/infer/")
+async def infer(apiInfer: ApiInfer):
+    # load the model
     model = joblib.load("./models/rfc_model.pkl")
     encoder = joblib.load("./models/encoder.pkl")
     lb = joblib.load("./models/lb.pkl")
     # call the inference function
 
-    raw_data = ApiInfer.createDataPayload()
+    raw_data = create_data_payload(apiInfer)
 
+    logger.info("raw data {}".format(raw_data))
+    logger.info("raw columns {}".format(raw_data.columns))
+    logger.info("raw shape {}".format(raw_data.shape))
     X, y, _, _ = preprocess_data.process_data(raw_data, train_model.get_cat_features(), None,
-                                            training=False, encoder=encoder, lb=lb)
+                                              training=False, encoder=encoder, lb=lb)
+    logger.info("X shape {}".format(X.shape))
 
     result = model_func.inference(model, X)
 
-    return {"inference": result}
+    logger.info("result shape {}".format(result.shape))
+    logger.info("result value {}".format(result))
+    return {"inference": "{}".format(result)}
+
 
 if __name__ == "__main__":
     slice_check.slice()
