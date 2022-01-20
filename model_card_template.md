@@ -26,5 +26,6 @@ precision_test 0.8170377541142304
 
 
 ## Ethical Considerations
+There is bias at both data and model level 
 
 ## Caveats and Recommendations
