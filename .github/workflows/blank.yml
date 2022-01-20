@@ -28,7 +28,7 @@ jobs:
     - name: Pull from dvc
       run:  |
         dvc remote list
-        dvc pull
+        dvc pull -v --remote mys3remote
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
