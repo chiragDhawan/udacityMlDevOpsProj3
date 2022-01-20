@@ -28,6 +28,7 @@ jobs:
     - name: Pull from dvc
       run:  |
         dvc remote list
+        dvc doctor
         aws s3 ls s3://udas3bucket/
         dvc pull -vv --remote mys3remote
     - name: Install dependencies
