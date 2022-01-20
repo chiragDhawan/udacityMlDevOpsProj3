@@ -33,6 +33,8 @@ jobs:
         dvc remote modify mys3remote read_timeout 500
         dvc remote modify mys3remote connect_timeout 500
         dvc remote modify mys3remote endpointurl https://udas3bucket.s3.amazonaws.com/
+        dvc remote modify mys3remote access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        dvc remote modify mys3remote secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         dvc doctor
         aws s3 ls s3://udas3bucket/
         dvc push -vv 
