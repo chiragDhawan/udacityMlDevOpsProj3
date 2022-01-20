@@ -14,7 +14,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: iterative/setup-dvc@v1
+    # - uses: iterative/setup-dvc@v1
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
@@ -25,20 +25,6 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-2     
-    - name: Pull from dvc
-      run:  |
-        dvc remote list
-        dvc remote modify mys3remote url s3://udas3bucket
-        dvc remote modify mys3remote endpointurl https://udas3bucket.s3.amazonaws.com/
-        dvc remote modify mys3remote read_timeout 500
-        dvc remote modify mys3remote connect_timeout 500
-        dvc remote modify mys3remote endpointurl https://udas3bucket.s3.amazonaws.com/
-        dvc remote modify mys3remote access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-        dvc remote modify mys3remote secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        dvc doctor
-        aws s3 ls s3://udas3bucket/
-        dvc push -vv 
-        dvc pull -vv --remote mys3remote
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -57,7 +43,21 @@ jobs:
         #flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         #flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-
+    
+    - name: Pull from dvc
+      run:  |
+        dvc remote list
+        dvc remote modify mys3remote url s3://udas3bucket
+        dvc remote modify mys3remote endpointurl https://udas3bucket.s3.amazonaws.com/
+        dvc remote modify mys3remote read_timeout 500
+        dvc remote modify mys3remote connect_timeout 500
+        dvc remote modify mys3remote endpointurl https://udas3bucket.s3.amazonaws.com/
+        dvc remote modify mys3remote access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        dvc remote modify mys3remote secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        dvc doctor
+        aws s3 ls s3://udas3bucket/
+        dvc push -vv 
+        dvc pull -vv --remote mys3remote
     - name: Test with pytest
       run: |
         $CONDA/bin/pytest
