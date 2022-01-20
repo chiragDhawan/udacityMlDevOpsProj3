@@ -28,6 +28,7 @@ jobs:
     - name: Pull from dvc
       run:  |
         dvc remote list
+        dvc remote modify mys3remote url s3://udas3bucket
         dvc doctor
         aws s3 ls s3://udas3bucket/
         dvc push -vv 
