@@ -29,6 +29,10 @@ jobs:
       run:  |
         dvc remote list
         dvc remote modify mys3remote url s3://udas3bucket
+        dvc remote modify mys3remote endpointurl https://udas3bucket.s3.amazonaws.com/
+        dvc remote modify mys3remote read_timeout 500
+        dvc remote modify mys3remote connect_timeout 500
+        dvc remote modify mys3remote endpointurl https://udas3bucket.s3.amazonaws.com/
         dvc doctor
         aws s3 ls s3://udas3bucket/
         dvc push -vv 
