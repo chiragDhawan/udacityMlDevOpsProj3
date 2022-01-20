@@ -13,8 +13,8 @@ CWD = os.path.dirname(os.path.realpath(__file__))
 path = Path(CWD)
 DATA_PATH = os.path.join(path.parent.absolute(), "data/census_cleaned.csv")
 MODEL_PATH = os.path.join(path.parent.absolute(), "models/rfc_model.pkl")
-ENCODER_PATH = os.path.join(path.parent.absolute(), "data/encoder.pkl")
-LB_PATH = os.path.join(path.parent.absolute(), "data/lb.pkl")
+ENCODER_PATH = os.path.join(path.parent.absolute(), "models/encoder.pkl")
+LB_PATH = os.path.join(path.parent.absolute(), "models/lb.pkl")
 
 def slice_data(data):
     """

@@ -18,8 +18,8 @@ logger = logging.getLogger()
 CWD = os.path.dirname(os.path.realpath(__file__))
 DATA_PATH = os.path.join(CWD, "data/census_cleaned.csv")
 MODEL_PATH = os.path.join(CWD, "models/rfc_model.pkl")
-ENCODER_PATH = os.path.join(CWD, "data/encoder.pkl")
-LB_PATH = os.path.join(CWD, "data/lb.pkl")
+ENCODER_PATH = os.path.join(CWD, "models/encoder.pkl")
+LB_PATH = os.path.join(CWD, "models/lb.pkl")
 
 app = FastAPI()
 
