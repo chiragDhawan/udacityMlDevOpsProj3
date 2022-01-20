@@ -46,18 +46,17 @@ jobs:
     
     - name: Pull from dvc
       run:  |
-        dvc remote list
-        dvc remote modify mys3remote url s3://udas3bucket
-        dvc remote modify mys3remote endpointurl https://udas3bucket.s3.amazonaws.com/
-        dvc remote modify mys3remote read_timeout 500
-        dvc remote modify mys3remote connect_timeout 500
-        dvc remote modify mys3remote endpointurl https://udas3bucket.s3.amazonaws.com/
-        dvc remote modify mys3remote access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-        dvc remote modify mys3remote secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        dvc doctor
+        $CONDA/bin/dvc remote list
+        $CONDA/bin/dvc remote modify mys3remote url s3://udas3bucket
+        $CONDA/bin/dvc remote modify mys3remote endpointurl https://udas3bucket.s3.amazonaws.com/
+        $CONDA/bin/dvc remote modify mys3remote read_timeout 500
+        $CONDA/bin/dvc remote modify mys3remote connect_timeout 500
+        $CONDA/bin/dvc remote modify mys3remote endpointurl https://udas3bucket.s3.amazonaws.com/
+        $CONDA/bin/dvc remote modify mys3remote access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        $CONDA/bin/dvc remote modify mys3remote secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        $CONDA/bin/dvc doctor
         aws s3 ls s3://udas3bucket/
-        dvc push -vv 
-        dvc pull -vv --remote mys3remote
+        $CONDA/bin/dvc pull -vv --remote mys3remote
     - name: Test with pytest
       run: |
         $CONDA/bin/pytest
