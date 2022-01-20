@@ -9,10 +9,17 @@ from pydantic import BaseModel, Field
 import joblib
 import logging
 from ml import model_func, preprocess_data, train_model
-from typing import List
+import os
+from pathlib import Path
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
+
+CWD = os.path.dirname(os.path.realpath(__file__))
+DATA_PATH = os.path.join(CWD, "data/census_cleaned.csv")
+MODEL_PATH = os.path.join(CWD, "models/rfc_model.pkl")
+ENCODER_PATH = os.path.join(CWD, "data/encoder.pkl")
+LB_PATH = os.path.join(CWD, "data/lb.pkl")
 
 app = FastAPI()
 
@@ -74,9 +81,9 @@ def create_data_payload(ApiInfer: ApiInfer):
 @app.post("/infer/")
 async def infer(apiInfer: ApiInfer):
     # load the model
-    model = joblib.load("./models/rfc_model.pkl")
-    encoder = joblib.load("./models/encoder.pkl")
-    lb = joblib.load("./models/lb.pkl")
+    model = joblib.load(MODEL_PATH)
+    encoder = joblib.load(ENCODER_PATH)
+    lb = joblib.load(LB_PATH)
     # call the inference function
 
     raw_data = create_data_payload(apiInfer)
@@ -97,3 +104,5 @@ async def infer(apiInfer: ApiInfer):
 
 if __name__ == "__main__":
     slice_check.slice()
+
+

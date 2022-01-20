@@ -2,11 +2,19 @@ import pandas as pd
 import joblib
 import logging
 import numpy as np
+import os
+from pathlib import Path
 from ml import model_func, train_model, preprocess_data
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
+CWD = os.path.dirname(os.path.realpath(__file__))
+path = Path(CWD)
+DATA_PATH = os.path.join(path.parent.absolute(), "data/census_cleaned.csv")
+MODEL_PATH = os.path.join(path.parent.absolute(), "models/rfc_model.pkl")
+ENCODER_PATH = os.path.join(path.parent.absolute(), "data/encoder.pkl")
+LB_PATH = os.path.join(path.parent.absolute(), "data/lb.pkl")
 
 def slice_data(data):
     """
@@ -48,9 +56,9 @@ def slice_model_salary(data, model, encoder, lb):
 
 #if __name__ == "__main__":
 def slice():
-    data = pd.read_csv("./data/census_cleaned.csv")
-    model = joblib.load("./models/rfc_model.pkl")
-    encoder = joblib.load("./models/encoder.pkl")
-    lb = joblib.load("./models/lb.pkl")
+    data = pd.read_csv(DATA_PATH)
+    model = joblib.load(MODEL_PATH)
+    encoder = joblib.load(ENCODER_PATH)
+    lb = joblib.load(LB_PATH)
     slice_data(data)
     slice_model_salary(data, model, encoder, lb)
