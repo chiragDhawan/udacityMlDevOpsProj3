@@ -30,6 +30,7 @@ jobs:
         dvc remote list
         dvc doctor
         aws s3 ls s3://udas3bucket/
+        dvc push -vv 
         dvc pull -vv --remote mys3remote
     - name: Install dependencies
       run: |
