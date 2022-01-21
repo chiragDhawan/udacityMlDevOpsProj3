@@ -14,7 +14,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    # - uses: iterative/setup-dvc@v1
+    - uses: iterative/setup-dvc@v1
     - name: Set up Python 3.8
       uses: actions/setup-python@v2
       with:
@@ -27,14 +27,12 @@ jobs:
         aws-region: us-east-2     
     - name: Pull from dvc
       run:  |
-        conda install -c conda-forge dvc=2.8.3
-        conda install -c conda-forge dvc-s3=2.8.3
         $CONDA/bin/dvc remote list
         $CONDA/bin/dvc remote modify mys3remote url s3://udas3bucket
         $CONDA/bin/dvc remote modify mys3remote endpointurl https://udas3bucket.s3.amazonaws.com/
         $CONDA/bin/dvc remote modify mys3remote read_timeout 500
         $CONDA/bin/dvc remote modify mys3remote connect_timeout 500
-        $CONDA/bin/dvc remote modify mys3remote endpointurl https://udas3bucket.s3.amazonaws.com/
+        $CONDA/bin/dvc remote modify mys3remote region us-east-2
         $CONDA/bin/dvc remote modify mys3remote access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
         $CONDA/bin/dvc remote modify mys3remote secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         $CONDA/bin/dvc doctor
