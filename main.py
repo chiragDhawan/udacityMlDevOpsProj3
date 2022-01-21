@@ -107,7 +107,6 @@ if "DYNO" in os.environ and os.path.isdir(".dvc"):
         exit("dvc pull failed")
     os.system("rm -r .dvc .apt/usr/lib/dvc")
 
-if __name__ == "__main__":
-    slice_check.slice()
+
 
 
