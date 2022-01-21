@@ -1,8 +1,11 @@
 [core]
-    remote = mys3remote
+    remote = myawsml
 ['remote "mys3remote"']
     url = s3://udas3bucket/
-    region = us-east-2
+    region = us-east-1
     read_timeout = 500
     connect_timeout = 500
-    endpointurl = https://udas3bucket.s3.amazonaws.com/
+['remote "myawsml"']
+    url = s3://myawsmlbucket/
+    region = us-east-1
+
