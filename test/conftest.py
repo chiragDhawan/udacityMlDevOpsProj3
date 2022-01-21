@@ -9,7 +9,7 @@ from pathlib import Path
 
 CWD = os.path.dirname(os.path.realpath(__file__))
 path = Path(CWD)
-DATA_PATH = os.path.join(path.parent, "data/census_cleaned.csv.dvc")
+DATA_PATH = os.path.join(path.parent, "data/census_cleaned.csv")
 
 @pytest.fixture(scope='session')
 def data():
