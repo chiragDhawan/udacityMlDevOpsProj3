@@ -3,8 +3,6 @@
 ['remote "mys3remote"']
     url = s3://udas3bucket/
     region = us-east-1
-    read_timeout = 500
-    connect_timeout = 500
 ['remote "myawsml"']
     url = s3://myawsmlbucket/
     region = us-east-1
