@@ -1,1 +1,1 @@
-web: uvicorn main:app
+web: $CONDA/bin/uvicorn main:app
