@@ -19,7 +19,7 @@ data={
   "native-country": "United-States"
 }
 
-r = requests.post('http://127.0.0.1:8000/infer', data=json.dumps(data))
+r = requests.post('https://udacitydevopsmlapp.herokuapp.com/infer', data=json.dumps(data))
 
 print(r.status_code) #== 200
 print(r.json())# == {"inference": "[0]"}
