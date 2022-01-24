@@ -25,3 +25,12 @@ liveApiTesting tests the live api
 For the first 2 points call pytest -vv . from the root folder
 For the liveApiTesting call python test/test_api.py
 for slice call python test/slice_check.py
+
+# Github Actions 
+Github actions have been created for the repo
+It installs dependencies
+Configures aws credentials
+Runs dvc pull
+Installs dependencies
+Runs flake8
+Runs pytest
