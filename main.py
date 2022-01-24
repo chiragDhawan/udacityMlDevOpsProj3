@@ -22,12 +22,12 @@ ENCODER_PATH = os.path.join(CWD, "models/encoder.pkl")
 LB_PATH = os.path.join(CWD, "models/lb.pkl")
 
 logger.info("Before DYNO")
-
+os.system("dvc pull")
 if "DYNO" in os.environ and os.path.isdir(".dvc"):
     os.system("dvc config core.no_scm true")
-    if os.system("dvc pull") != 0:
-        exit("dvc pull failed")
-    os.system("rm -r .dvc .apt/usr/lib/dvc")
+    # if os.system("dvc pull") != 0:
+        # exit("dvc pull failed")
+    # os.system("rm -r .dvc .apt/usr/lib/dvc")
 
 
 

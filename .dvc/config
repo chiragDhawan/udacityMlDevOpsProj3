@@ -1,5 +1,6 @@
 [core]
     remote = myawsml
+    no_scm = true
 ['remote "mys3remote"']
     url = s3://udas3bucket/
     region = us-east-1
