@@ -1,1 +1,0 @@
-uvicorn @ file:///home/conda/feedstock_root/build_artifacts/uvicorn_1638979090717/work
