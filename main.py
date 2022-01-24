@@ -21,6 +21,8 @@ MODEL_PATH = os.path.join(CWD, "models/rfc_model.pkl")
 ENCODER_PATH = os.path.join(CWD, "models/encoder.pkl")
 LB_PATH = os.path.join(CWD, "models/lb.pkl")
 
+logger.info("Before DYNO")
+
 if "DYNO" in os.environ and os.path.isdir(".dvc"):
     os.system("dvc config core.no_scm true")
     if os.system("dvc pull") != 0:
