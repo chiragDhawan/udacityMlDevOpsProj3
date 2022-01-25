@@ -6,6 +6,9 @@ https://github.com/chiragDhawan/udacityMlDevOpsProj3
 # environment
 conda env create -f environment.yml
 
+# live api
+https://udacitydevopsmlapp.herokuapp.com/
+
 # Train
 If want to train the model then run python ml/train.py from the root folder
 
@@ -26,7 +29,7 @@ It also contains test_api which contains local api testing
 The test folder contains slice_check to verify slicing
 liveApiTesting tests the live api
 For the first 2 points call pytest -vv . from the root folder
-For the liveApiTesting call python test/liveApiTesting.py 
+For the liveApiTesting call python test/liveApiTesting.py
 for slice call python test/slice_check.py
 
 # Github Actions 

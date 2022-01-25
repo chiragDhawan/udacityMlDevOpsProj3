@@ -7,9 +7,8 @@ from pathlib import Path
 import sys
 
 CWD = os.path.dirname(os.path.realpath(__file__))
-path = Path(CWD)
-DATA_PATH = os.path.join(path.parent, "ml")
-sys.path.append(str(path.parent))
+curr_file_path = Path(CWD)
+sys.path.append(str(curr_file_path.parent))
 
 from ml import model_func, train_model, preprocess_data
 

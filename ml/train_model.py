@@ -3,11 +3,18 @@ import pandas as pd
 import joblib
 import logging
 from sklearn.model_selection import train_test_split
+import os
+from pathlib import Path
+import sys
+CWD = os.path.dirname(os.path.realpath(__file__))
+curr_file_path = Path(CWD)
+sys.path.append(str(curr_file_path.parent))
 from ml.preprocess_data import process_data
 from ml.model_func import training_model, compute_model_metrics, inference
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
+
 
 def load_data(path):
     # Add code to load in the data.
@@ -15,6 +22,7 @@ def load_data(path):
     logger.info("data sample")
     logger.info(data.head())
     return data
+
 
 def split_data(data):
     train, test = train_test_split(data, test_size=0.20)
@@ -38,7 +46,7 @@ def get_cat_features():
 
 
 if __name__=="__main__":
-    data = load_data("../data/census_cleaned.csv")
+    data = load_data("data/census_cleaned.csv")
     cat_features = get_cat_features()
     train, test = split_data(data)
     X_train, y_train, encoder, lb = process_data(
@@ -62,6 +70,6 @@ if __name__=="__main__":
     logger.info("precision_test {}\n recall_test {}\n fbeta_test {}".format(precision_test, recall_test, fbeta_test))
 
     # Save model, encoder, lb
-    joblib.dump(model, '../models/rfc_model.pkl')
-    joblib.dump(encoder, '../models/encoder.pkl')
-    joblib.dump(lb, '../models/lb.pkl')
+    joblib.dump(model, 'models/rfc_model.pkl')
+    joblib.dump(encoder, 'models/encoder.pkl')
+    joblib.dump(lb, 'models/lb.pkl')
