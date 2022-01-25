@@ -21,5 +21,5 @@ data={
 
 r = requests.post('https://udacitydevopsmlapp.herokuapp.com/infer', data=json.dumps(data))
 
-print(r.status_code) #== 200
-print(r.json())# == {"inference": "[0]"}
+assert r.status_code== 200
+assert r.json()== {"inference": "[0]"}

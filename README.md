@@ -3,6 +3,9 @@
 # Git hub link
 https://github.com/chiragDhawan/udacityMlDevOpsProj3
 
+# environment
+conda env create -f environment.yml
+
 # Train
 If want to train the model then run python ml/train.py from the root folder
 
@@ -23,7 +26,7 @@ It also contains test_api which contains local api testing
 The test folder contains slice_check to verify slicing
 liveApiTesting tests the live api
 For the first 2 points call pytest -vv . from the root folder
-For the liveApiTesting call python test/test_api.py
+For the liveApiTesting call python test/liveApiTesting.py 
 for slice call python test/slice_check.py
 
 # Github Actions 
@@ -34,3 +37,26 @@ Runs dvc pull
 Installs dependencies
 Runs flake8
 Runs pytest
+
+# fast api 
+Contains two endpoints
+'/' Welcomes to the app -- get method
+'/infer' predicts the output of the model -- post method
+e.g input to the infer post
+
+{
+  "age": 50,
+  "workclass": "Self-emp-not-inc",
+  "fnlgt": 83311,
+  "education": "Bachelors",
+  "education-num": 13,
+  "marital-status": "Married-civ-spouse",
+  "occupation": "Exec-managerial",
+  "relationship": "Husband",
+  "race": "White",
+  "sex": "Male",
+  "capital-gain": 0,
+  "capital-loss": 0,
+  "hours-per-week": 13,
+  "native-country": "United-States"
+}

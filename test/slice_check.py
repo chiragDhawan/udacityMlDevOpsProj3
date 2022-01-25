@@ -4,6 +4,13 @@ import logging
 import numpy as np
 import os
 from pathlib import Path
+import sys
+
+CWD = os.path.dirname(os.path.realpath(__file__))
+path = Path(CWD)
+DATA_PATH = os.path.join(path.parent, "ml")
+sys.path.append(str(path.parent))
+
 from ml import model_func, train_model, preprocess_data
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
@@ -54,8 +61,7 @@ def slice_model_salary(data, model, encoder, lb):
         logger.info(f"fbeta {fbeta}")
 
 
-#if __name__ == "__main__":
-def slice():
+if __name__ == "__main__":
     data = pd.read_csv(DATA_PATH)
     model = joblib.load(MODEL_PATH)
     encoder = joblib.load(ENCODER_PATH)
