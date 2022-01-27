@@ -22,6 +22,17 @@ MODEL_PATH = os.path.join(path.parent.absolute(), "models/rfc_model.pkl")
 ENCODER_PATH = os.path.join(path.parent.absolute(), "models/encoder.pkl")
 LB_PATH = os.path.join(path.parent.absolute(), "models/lb.pkl")
 
+cat_features = [
+    "workclass",
+    "education",
+    "marital-status",
+    "occupation",
+    "relationship",
+    "race",
+    "sex",
+    "native-country",
+]
+
 def slice_data(data):
     """
     This function slices on the salary and calculates statistics of education-num
@@ -39,25 +50,28 @@ def slice_data(data):
         logger.info(f"education-num stddev: {stddev:.4f}")
 
 
-def slice_model_salary(data, model, encoder, lb):
+def slice_model_salary(data, model, encoder, lb, cat_feature):
     """
     This function slices the salary and check the model performance on each class of it
     :param data:
+    :param cat_feature: the feature on which to perform the slice
     :param model:
     :return:
     """
-    for cls in data["salary"].unique():
-        df_temp = data[data["salary"] == cls]
+    slice_output_file = open("slice_output.txt", 'w')
+    for cls in data[cat_feature].unique():
+        df_temp = data[data[cat_feature] == cls]
         logger.info("df temp shape\n {}".format(df_temp.shape))
         X, y, _, _ = preprocess_data.process_data(df_temp, train_model.get_cat_features(),
                                                     'salary', False, encoder, lb)
         logger.info("X\n {}".format(X.shape))
         predictions = model_func.inference(model, X)
         precision, recall, fbeta = model_func.compute_model_metrics(y, predictions)
-        logger.info(f"Class: {cls}")
-        logger.info(f"precision {precision}")
-        logger.info(f"recall {recall}")
-        logger.info(f"fbeta {fbeta}")
+        slice_output_file.write(f"Class: {cls} \n")
+        slice_output_file.write(f"precision {precision} \n")
+        slice_output_file.write(f"recall {recall} \n ")
+        slice_output_file.write(f"fbeta {fbeta} \n")
+
 
 
 if __name__ == "__main__":
@@ -66,4 +80,4 @@ if __name__ == "__main__":
     encoder = joblib.load(ENCODER_PATH)
     lb = joblib.load(LB_PATH)
     slice_data(data)
-    slice_model_salary(data, model, encoder, lb)
+    slice_model_salary(data, model, encoder, lb, "race")

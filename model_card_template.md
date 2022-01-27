@@ -26,6 +26,11 @@ precision_test 0.8170377541142304
 
 
 ## Ethical Considerations
-There is bias at both data and model level 
+There is both supervised and unsupervised bias. 
+For native-country fpr is 1 Yugoslavia and 0.03 for United-States
+For the full list of bias go to ethics_biases folder and check bias_df.csv
+For other bias and fairness result check out the ethics.ipynb in the ethics_biases folder
 
 ## Caveats and Recommendations
+This models fitness may or may not lend it for use in production.
+The outcome of the model and the subsequent decision should be taken keeping in mind the biases

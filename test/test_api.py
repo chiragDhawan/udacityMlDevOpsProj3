@@ -35,25 +35,26 @@ def test_inference_1():
     assert r.json() == {"inference": "[0]"}
 
 
-#50, Self-emp-not-inc,83311, Bachelors,13, Married-civ-spouse, Exec-managerial, Husband, White, Male,0,0,13, United-States, <=50K
+#52, Self-emp-inc,287927, HS-grad,9, Married-civ-spouse, Exec-managerial, Wife, White, Female,15024,0,40, United-States, >50K
 def test_inference_2():
     r = client.post("/infer/",
                     json={
   "age": 50,
   "workclass": "Self-emp-not-inc",
-  "fnlgt": 83311,
-  "education": "Bachelors",
-  "education-num": 13,
+  "fnlgt": 287927,
+  "education": "HS-grad",
+  "education-num": 9,
   "marital-status": "Married-civ-spouse",
   "occupation": "Exec-managerial",
-  "relationship": "Husband",
+  "relationship": "Wife",
   "race": "White",
-  "sex": "Male",
-  "capital-gain": 0,
+  "sex": "Female",
+  "capital-gain": 15024,
   "capital-loss": 0,
-  "hours-per-week": 13,
+  "hours-per-week": 40,
   "native-country": "United-States"
 },)
 
     assert r.status_code == 200
-    assert r.json() == {"inference": "[0]"}
+    assert r.json() == {"inference": "[1]"}
+
