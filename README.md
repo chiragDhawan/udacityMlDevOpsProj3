@@ -27,6 +27,7 @@ models folder
 using pytest the data has been unit tested
 It also contains test_api which contains local api testing
 The test folder contains slice_check to verify slicing
+The output of slice check on "race" is printed in slice_output.txt in the root folder
 liveApiTesting tests the live api
 For the first 2 points call pytest -vv . from the root folder
 For the liveApiTesting call python test/liveApiTesting.py
